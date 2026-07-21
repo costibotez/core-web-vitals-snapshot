@@ -1,0 +1,471 @@
+/* Design tokens — shared with the landing page Tailwind config. */
+:root {
+  --brand-primary: #ff7a18; /* action only, never status */
+  --brand-primary-hover: #e56d10;
+  --brand-primary-text: #ff8c3a; /* AA-safe orange for small text on dark */
+  --surface-dark: #1a2332;
+  --surface-dark-raised: #222d40;
+  --surface-light: #f4f5f7;
+  --status-pass: #22c55e;
+  --status-warn: #f59e0b;
+  --status-fail: #ef4444;
+  --text-primary: #f1f5f9;
+  --text-secondary: #b6c0cf;
+  --text-faint: #8593a8;
+  --border-subtle: rgba(148, 163, 184, 0.18);
+  --radius: 12px;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("../assets/fonts/sora-latin.woff2") format("woff2");
+  font-weight: 100 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  width: 360px;
+  background: var(--surface-dark);
+  color: var(--text-primary);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Sora", "Inter", system-ui, sans-serif;
+  font-weight: 600;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand-primary-text);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 12px;
+  gap: 12px;
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.header__brand {
+  font-family: "Sora", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.header__options {
+  color: var(--text-faint);
+  padding: 4px;
+  border-radius: 6px;
+  display: inline-flex;
+}
+.header__options:hover {
+  color: var(--text-secondary);
+  background: var(--surface-dark-raised);
+}
+
+/* ---------- Verdict badge (top third, dominant) ---------- */
+.verdict {
+  min-height: 148px; /* reserved: identical for measuring + settled states */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 18px 14px;
+  border-radius: var(--radius);
+  background: var(--surface-dark-raised);
+  border: 1px solid var(--border-subtle);
+}
+
+.verdict__site {
+  font-size: 12px;
+  color: var(--text-secondary);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.verdict__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Sora", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.verdict__icon {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+
+.verdict__sentence {
+  font-size: 13px;
+  color: var(--text-secondary);
+  max-width: 290px;
+}
+
+.verdict--healthy .verdict__badge { color: var(--status-pass); }
+.verdict--needs-attention .verdict__badge { color: var(--status-warn); }
+.verdict--at-risk .verdict__badge { color: var(--status-fail); }
+
+.verdict--measuring .verdict__badge {
+  color: var(--text-secondary);
+}
+.verdict--measuring .verdict__icon {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.88); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verdict--measuring .verdict__icon { animation: none; }
+}
+
+/* ---------- Metric rows ---------- */
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metric {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  background: var(--surface-dark-raised);
+  overflow: hidden;
+}
+
+.metric__summary {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  text-align: left;
+}
+.metric__summary:hover {
+  background: rgba(148, 163, 184, 0.06);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  flex: none;
+  margin-top: 1px;
+  white-space: nowrap;
+}
+.chip svg { width: 11px; height: 11px; flex: none; }
+
+.chip--good { background: rgba(34, 197, 94, 0.15); color: var(--status-pass); }
+.chip--needs-improvement { background: rgba(245, 158, 11, 0.15); color: var(--status-warn); }
+.chip--poor { background: rgba(239, 68, 68, 0.15); color: var(--status-fail); }
+.chip--pending { background: rgba(148, 163, 184, 0.15); color: var(--text-secondary); }
+
+.metric__text { flex: 1; min-width: 0; }
+
+.metric__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.metric__name abbr {
+  text-decoration: none;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+.metric__sentence {
+  color: var(--text-secondary);
+  font-size: 12.5px;
+}
+
+.metric__chevron {
+  flex: none;
+  color: var(--text-faint);
+  margin-top: 4px;
+  transition: transform 0.15s ease;
+}
+.metric--open .metric__chevron { transform: rotate(180deg); }
+
+.metric__detail {
+  padding: 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.compare__cell {
+  background: var(--surface-dark);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.compare__label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  margin-bottom: 2px;
+}
+
+.compare__value {
+  font-family: "Sora", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+.compare__value--good { color: var(--status-pass); }
+.compare__value--needs-improvement { color: var(--status-warn); }
+.compare__value--poor { color: var(--status-fail); }
+.compare__value--none { color: var(--text-faint); font-size: 12px; font-family: "Inter", sans-serif; font-weight: 400; }
+
+.compare__hint {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.metric__note,
+.metric__explainer {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.metric__explainer strong { color: var(--text-primary); }
+
+/* The only monetization surface: appears solely on failing metrics. */
+.fix-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: var(--brand-primary);
+  color: #fff;
+  font-weight: 500;
+  font-size: 12.5px;
+  border-radius: 8px;
+  padding: 8px 14px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.fix-cta:hover { background: var(--brand-primary-hover); }
+
+/* ---------- Data source bar ---------- */
+.source {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px dashed var(--border-subtle);
+  text-align: left;
+}
+.source:hover { color: var(--text-secondary); }
+.source svg { flex: none; }
+
+.source__explain {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  padding: 8px 10px;
+  background: var(--surface-dark-raised);
+  border-radius: 8px;
+}
+
+/* ---------- Actions ---------- */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-secondary {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: background-color 0.15s ease;
+}
+.btn-secondary:hover:not(:disabled) { background: var(--surface-dark-raised); }
+.btn-secondary:disabled { opacity: 0.55; cursor: default; }
+
+/* ---------- Recent checks ---------- */
+.recent {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 10px;
+}
+.recent[hidden] { display: none; }
+
+.recent__title {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  margin-bottom: 6px;
+}
+
+.recent__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recent__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: left;
+}
+.recent__item:hover { background: var(--surface-dark-raised); }
+
+.recent__domain {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-badge {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex: none;
+}
+.mini-badge--healthy { background: var(--status-pass); }
+.mini-badge--needs-attention { background: var(--status-warn); }
+.mini-badge--at-risk { background: var(--status-fail); }
+
+.recent__time { color: var(--text-faint); font-size: 11px; flex: none; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%) translateY(6px);
+  background: var(--surface-light);
+  color: #0f172a;
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 8px 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+.toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Unsupported page ---------- */
+.unsupported {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 28px 16px;
+}
+.unsupported h2 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); }
+
+/* Restored-snapshot banner */
+.restored {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  background: var(--surface-dark-raised);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+.restored button {
+  color: var(--brand-primary-text);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

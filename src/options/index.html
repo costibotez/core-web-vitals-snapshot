@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Core Web Vitals Snapshot — Options</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <main class="options">
+      <h1>Core Web Vitals Snapshot</h1>
+      <p class="options__sub">Nothing here is tracked. Settings stay on this device.</p>
+
+      <section class="options__row">
+        <label class="options__label" for="badge-toggle">
+          <span>Show verdict badge on the toolbar icon</span>
+          <span class="options__hint">A small green/amber/red mark after each check.</span>
+        </label>
+        <input type="checkbox" id="badge-toggle" class="options__toggle" />
+      </section>
+
+      <section class="options__row">
+        <div class="options__label">
+          <span>Session history</span>
+          <span class="options__hint">The last 5 checks, kept only until you close Chrome.</span>
+        </div>
+        <button id="clear-history" class="options__btn" type="button">Clear history</button>
+      </section>
+
+      <p class="options__status" id="status" role="status"></p>
+    </main>
+    <script type="module" src="./options.ts"></script>
+  </body>
+</html>
