@@ -18,7 +18,7 @@ export default defineManifest({
   name: "Core Web Vitals Snapshot",
   version: pkg.version,
   description:
-    "Is your site fast enough for Google? A one-click, plain-English Core Web Vitals verdict. Free, no account, nothing leaves your browser.",
+    "Is your site fast enough for Google? A one-click, plain-English Core Web Vitals verdict. No account, nothing leaves your browser.",
   icons: {
     16: "icons/icon-16.png",
     32: "icons/icon-32.png",
